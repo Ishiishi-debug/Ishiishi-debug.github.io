@@ -3,122 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Ishan Kumar | Action Camera Project</title>
+    <title>Ishan Kumar | Action Camera</title>
     <style>
-        /* (same CSS as before – no changes) */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #0a0a0a; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #eaeef2; line-height: 1.5; scroll-behavior: smooth; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1a1a1a; }
-        ::-webkit-scrollbar-thumb { background: #e63946; border-radius: 4px; }
-        h1, h2, h3 { font-weight: 500; letter-spacing: -0.02em; }
-        h1 { font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; }
-        h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); border-left: 4px solid #e63946; padding-left: 1rem; margin-bottom: 1.5rem; }
-        a { color: #e63946; text-decoration: none; transition: 0.2s; }
-        a:hover { color: #ff6b7c; }
-        .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
-        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle at 70% 20%, #1e1e2a, #0a0a0a); position: relative; overflow: hidden; }
-        .hero::before { content: ''; position: absolute; inset: 0; background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBmaWxsPSIjMjIyIiBmaWxsLW9wYWNpdHk9IjAuMDMiIGQ9Ik0wIDBoNDB2NDBIMHoiLz48cGF0aCBkPSJNMjAgMzhjLTkuOSAwLTE4LTguMS0xOC0xOHM4LjEtMTggMTgtMTggMTggOC4xIDE4IDE4LTguMSAxOC0xOCAxOHoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3N2Zz4='); opacity: 0.1; pointer-events: none; }
-        .hero-content { max-width: 800px; z-index: 2; animation: fadeUp 0.8s ease-out; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .hero h1 span { color: #e63946; }
-        .hero p { font-size: 1.2rem; margin: 1.5rem 0; opacity: 0.8; }
-        .btn { display: inline-block; background: #e63946; color: white; padding: 0.8rem 2rem; border-radius: 40px; font-weight: 500; transition: 0.3s; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(230,57,70,0.3); }
-        .btn:hover { background: #ff4d5e; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(230,57,70,0.4); }
-        section { padding: 5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .section-light { background: #111114; }
-        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
-        .spec-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(4px); border-radius: 28px; padding: 1.8rem; border: 1px solid rgba(230,57,70,0.2); transition: all 0.3s; }
-        .spec-card:hover { border-color: #e63946; transform: translateY(-5px); }
-        .spec-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #e63946; }
-        .spec-card p { font-size: 1rem; opacity: 0.8; }
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
-        .gallery-item { background: #1c1c24; border-radius: 24px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-        .gallery-item:hover { transform: scale(1.02); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-        .gallery-item img { width: 100%; height: auto; display: block; transition: 0.3s; }
-        .gallery-caption { padding: 1rem; font-size: 0.9rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: #111114; }
-        .story { max-width: 900px; margin: 0 auto; text-align: center; }
-        .story p { font-size: 1.1rem; margin-bottom: 1.2rem; opacity: 0.9; }
-        footer { background: #050505; text-align: center; padding: 2rem; font-size: 0.9rem; color: #aaa; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #1d1d1f;
+            line-height: 1.4;
+            scroll-behavior: smooth;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.05;
+            margin-bottom: 1rem;
+        }
+        h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+        .subhead {
+            font-size: 1.5rem;
+            color: #86868b;
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+        .section {
+            padding: 6rem 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e9e9ed;
+            padding: 1rem 2rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-weight: 600;
+            font-size: 1.25rem;
+            letter-spacing: -0.01em;
+        }
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: #1d1d1f;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #e63946;
+        }
+        @media (max-width: 700px) {
+            nav { flex-direction: column; gap: 0.5rem; text-align: center; }
+            .nav-links a { margin: 0 0.75rem; }
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            background: #fbfbfd;
+        }
+        .hero h1 span {
+            color: #e63946;
+        }
+        .btn-primary {
+            display: inline-block;
+            background-color: #e63946;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-primary:hover {
+            background-color: #c5303f;
+            transform: scale(1.02);
+        }
+
+        /* Feature grid (specs) */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        .feature-card {
+            text-align: left;
+            padding: 1rem 0;
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #e63946;
+        }
+        .feature-card p {
+            color: #6e6e73;
+            line-height: 1.5;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .gallery-item {
+            background: #f5f5f7;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -15px rgba(0,0,0,0.1);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #eaeaea;
+        }
+        .gallery-caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #6e6e73;
+            text-align: center;
+            background: white;
+            border-top: 1px solid #f0f0f2;
+        }
+
+        /* Story section */
+        .story {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #1d1d1f;
+        }
+        .story p {
+            margin-bottom: 1.2rem;
+        }
+
+        /* Contact */
+        .contact {
+            text-align: center;
+            background: #fbfbfd;
+            border-radius: 32px;
+            padding: 3rem;
+            margin: 2rem 0;
+        }
+        .contact .btn-primary {
+            margin-top: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #e9e9ed;
+            font-size: 0.8rem;
+            color: #86868b;
+        }
+
+        /* misc */
         .text-center { text-align: center; }
-        .mt-4 { margin-top: 2rem; }
-        .accent { color: #e63946; }
+        hr { margin: 2rem 0; border: 0; height: 1px; background: #e9e9ed; }
     </style>
 </head>
 <body>
 
+<nav>
+    <div class="logo">Ishan Kumar</div>
+    <div class="nav-links">
+        <a href="#specs">Features</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#story">Story</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
 <main>
     <div class="hero">
-        <div class="hero-content">
-            <h1>The <span>Magnetic Coin</span> Action Camera</h1>
-            <p>1TB internal storage · Edge‑to‑edge OLED · Inspired by Jony Ive & Apple</p>
-            <a href="#gallery" class="btn">Explore the design</a>
+        <div class="container">
+            <h1>The <span>Magnetic Coin</span><br>Action Camera</h1>
+            <div class="subhead">1TB internal storage · Edge‑to‑edge OLED · Inspired by Jony Ive & Apple</div>
+            <a href="#gallery" class="btn-primary">Explore the design →</a>
         </div>
     </div>
 
-    <div class="container">
-        <!-- Specs -->
-        <section id="specs">
-            <h2>Technical Highlights</h2>
-            <div class="specs-grid">
-                <div class="spec-card"><h3>Magnetic Coin System</h3><p>Swap the red fabric strap for a magnetic charger in seconds. The coin sits flush, ejected by a recessed button.</p></div>
-                <div class="spec-card"><h3>1TB Internal Storage</h3><p>No more lost SD cards. Built‑in storage keeps your footage safe and simplifies your workflow.</p></div>
-                <div class="spec-card"><h3>Edge‑to‑Edge OLED</h3><p>Front and back displays disappear into the anodised aluminium body – bright, sharp, and intuitive.</p></div>
-                <div class="spec-card"><h3>Tactile Controls</h3><p>iMac M4‑inspired power button, pill‑shaped volume keys (front up / back down), and a dedicated capture button.</p></div>
-                <div class="spec-card"><h3>Premium Materials</h3><p>Matte silver anodised aluminium with deep red accents. Compact dimensions: 65 × 48.75 × 23.83 mm.</p></div>
-                <div class="spec-card"><h3>Action‑Ready</h3><p>Designed for adventure – rugged yet refined. Water‑resistant concept with a sapphire glass lens cover.</p></div>
+    <div class="section" id="specs">
+        <div class="container">
+            <h2 class="text-center">Technical Highlights</h2>
+            <div class="features-grid">
+                <div class="feature-card"><h3>Magnetic Coin System</h3><p>Swap the red fabric strap for a magnetic charger in seconds. The coin sits flush, ejected by a recessed button.</p></div>
+                <div class="feature-card"><h3>1TB Internal Storage</h3><p>No more lost SD cards. Built‑in storage keeps your footage safe and simplifies your workflow.</p></div>
+                <div class="feature-card"><h3>Edge‑to‑Edge OLED</h3><p>Front and back displays disappear into the anodised aluminium body – bright, sharp, and intuitive.</p></div>
+                <div class="feature-card"><h3>Tactile Controls</h3><p>iMac M4‑inspired power button, pill‑shaped volume keys (front up / back down), and a dedicated capture button.</p></div>
+                <div class="feature-card"><h3>Premium Materials</h3><p>Matte silver anodised aluminium with deep red accents. Compact dimensions: 65 × 48.75 × 23.83 mm.</p></div>
+                <div class="feature-card"><h3>Action‑Ready</h3><p>Designed for adventure – rugged yet refined. Water‑resistant concept with a sapphire glass lens cover.</p></div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Gallery – now using your render file names -->
-        <section id="gallery">
-            <h2>Design Gallery</h2>
-            <div class="gallery">
-                <!-- Hero shots (full camera views) -->
-                <div class="gallery-item"><img src="Hero shot 1.png" alt="Hero shot 1" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Hero+Shot+1'"><div class="gallery-caption">Hero shot – front perspective</div></div>
-                <div class="gallery-item"><img src="Hero shot 2.png" alt="Hero shot 2" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Hero+Shot+2'"><div class="gallery-caption">Hero shot – side view</div></div>
-                <div class="gallery-item"><img src="Hero shot 3.png" alt="Hero shot 3" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Hero+Shot+3'"><div class="gallery-caption">Hero shot – rear with display</div></div>
-                <div class="gallery-item"><img src="Hero shot 4.png" alt="Hero shot 4" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Hero+Shot+4'"><div class="gallery-caption">Hero shot – angled view</div></div>
+    <div class="section" id="gallery">
+        <div class="container">
+            <h2 class="text-center">Design Gallery</h2>
+            <div class="gallery-grid">
+                <!-- Hero shots -->
+                <div class="gallery-item"><img src="Hero shot 1.png" alt="Hero shot 1"><div class="gallery-caption">Hero shot 1</div></div>
+                <div class="gallery-item"><img src="Hero shot 2.png" alt="Hero shot 2"><div class="gallery-caption">Hero shot 2</div></div>
+                <div class="gallery-item"><img src="Hero shot 3.png" alt="Hero shot 3"><div class="gallery-caption">Hero shot 3</div></div>
+                <div class="gallery-item"><img src="Hero shot 4.png" alt="Hero shot 4"><div class="gallery-caption">Hero shot 4</div></div>
                 <!-- Detail shots -->
-                <div class="gallery-item"><img src="Detail shot 1.png" alt="Detail shot 1" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Detail+Shot+1'"><div class="gallery-caption">Detail – coin mechanism</div></div>
-                <div class="gallery-item"><img src="Detail shot 2.png" alt="Detail shot 2" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Detail+Shot+2'"><div class="gallery-caption">Detail – power button</div></div>
-                <div class="gallery-item"><img src="Detail shot 3.png" alt="Detail shot 3" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Detail+Shot+3'"><div class="gallery-caption">Detail – volume controls</div></div>
-                <!-- Mood / artistic -->
-                <div class="gallery-item"><img src="Mood:artistic shot 1.png" alt="Mood/artistic shot 1" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Mood+Shot+1'"><div class="gallery-caption">Artistic – light play</div></div>
-                <div class="gallery-item"><img src="Mood:artistic shot 2.jpg" alt="Mood/artistic shot 2" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Mood+Shot+2'"><div class="gallery-caption">Artistic – fabric strap detail</div></div>
+                <div class="gallery-item"><img src="Detail shot 1.png" alt="Detail shot 1"><div class="gallery-caption">Detail shot 1</div></div>
+                <div class="gallery-item"><img src="Detail shot 2.png" alt="Detail shot 2"><div class="gallery-caption">Detail shot 2</div></div>
+                <div class="gallery-item"><img src="Detail shot 3.png" alt="Detail shot 3"><div class="gallery-caption">Detail shot 3</div></div>
                 <!-- Previous iterations -->
-                <div class="gallery-item"><img src="Previous iteration shot 1.png" alt="Previous iteration shot 1" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Iteration+1'"><div class="gallery-caption">Previous iteration – early prototype</div></div>
-                <div class="gallery-item"><img src="Previous iteration shot 2.png" alt="Previous iteration shot 2" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Iteration+2'"><div class="gallery-caption">Previous iteration – scale exploration</div></div>
+                <div class="gallery-item"><img src="Previous iteration shot 1.png" alt="Previous iteration shot 1"><div class="gallery-caption">Previous iteration shot 1</div></div>
+                <div class="gallery-item"><img src="Previous iteration shot 2.png" alt="Previous iteration shot 2"><div class="gallery-caption">Previous iteration shot 2</div></div>
             </div>
-            <p class="text-center" style="font-size:0.9rem; margin-top:1rem;">*Upload your images with these exact file names (including spaces). The site will show them once uploaded.</p>
-        </section>
+        </div>
+    </div>
 
-        <!-- Story & Process (unchanged) -->
-        <section class="section-light">
+    <div class="section" id="story">
+        <div class="container">
+            <h2 class="text-center">From Idea to Reality</h2>
             <div class="story">
-                <h2>From Idea to Reality</h2>
                 <p>I started with zero engineering knowledge, a 3D printer, and a stubborn curiosity. I taught myself Fusion 360 by crashing it more times than I can count. Every fillet, every button, every decision came from asking <em>“what if?”</em></p>
                 <p>What if the strap was bright red fabric against cold silver metal? What if the buttons felt as good as they looked? What if the camera had 1TB internal storage so you never lose an SD card?</p>
                 <p>Inspired by Jony Ive’s Ferrari Luce interior, the iPhone 17 Pro’s anodised finish, and the iMac M4’s perfect power button, I built a camera that feels as good in your hand as it looks on paper.</p>
                 <p>Now it exists as a complete 3D model, technical drawings, and 3D‑printed prototypes (PLA‑CF and red PLA). This is version one – and it's only the beginning.</p>
             </div>
-        </section>
-
-        <!-- Contact -->
-        <section style="text-align: center;">
-            <h2>Let’s Build Something</h2>
-            <p style="max-width: 600px; margin: 0 auto 1.5rem;">If you're interested in collaborating, manufacturing, or just want to chat about the design, reach out.</p>
-            <a href="mailto:your-email@example.com" class="btn">Contact Me</a>
-        </section>
+        </div>
     </div>
 
-    <footer>
-        <p>© 2026 Ishan Kumar – Designed in Fusion 360, brought to life with a Bambu Lab P2S.</p>
-        <p style="margin-top:0.5rem; font-size:0.8rem;">This is an independent project – all concepts and designs are original.</p>
-    </footer>
+    <div class="section" id="contact">
+        <div class="container">
+            <div class="contact">
+                <h2>Let’s Build Something</h2>
+                <p style="max-width: 500px; margin: 0 auto 1.5rem;">Interested in collaborating, manufacturing, or just want to chat about the design? Reach out.</p>
+                <a href="mailto:your-email@example.com" class="btn-primary">Contact Me</a>
+            </div>
+        </div>
+    </div>
 </main>
 
+<footer>
+    <p>© 2026 Ishan Kumar – Designed in Fusion 360, brought to life with a Bambu Lab P2S.</p>
+    <p style="margin-top:0.5rem;">This is an independent project – all concepts and designs are original.</p>
+</footer>
+
 <script>
+    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const target = document.querySelector(this.getAttribute('href'));
