@@ -2,427 +2,570 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Ishan Kumar | Action Camera – 3D Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Ishan Kumar | Magnetic Coin Action Camera</title>
+    <!-- Preconnect for fonts and smooth performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        body {
+        /* -------------------------------------------------------------
+            RESET & GLOBAL
+        ------------------------------------------------------------- */
+        * {
             margin: 0;
-            overflow-x: hidden;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #000;
-            color: #fff;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Canvas fills the background */
-        canvas {
-            display: block;
+        :root {
+            --white: #ffffff;
+            --black: #0a0a0f;
+            --red: #e63946;
+            --burgundy: #6b1e2a;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --transition-smooth: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* -------------------------------------------------------------
+            CANVAS BACKGROUND (3D GLASS STRIPES)
+        ------------------------------------------------------------- */
+        #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
+            pointer-events: none;
         }
 
-        /* Overlay content – scrollable */
-        .content {
+        /* -------------------------------------------------------------
+            MAIN CONTENT LAYER
+        ------------------------------------------------------------- */
+        .main-content {
             position: relative;
             z-index: 10;
-            pointer-events: none; /* allow clicks to pass through to canvas if needed, but we'll re-enable for interactive elements */
-        }
-        .content section {
-            pointer-events: auto; /* make text and buttons clickable */
+            backdrop-filter: blur(0px); /* no blur on wrapper, individual panels blur */
         }
 
-        /* Glassmorphic panels */
+        /* -------------------------------------------------------------
+            GLASS PANELS (professional, layered, 3D)
+        ------------------------------------------------------------- */
         .glass-panel {
-            background: rgba(20, 20, 30, 0.5);
+            background: rgba(10, 10, 15, 0.65);
             backdrop-filter: blur(12px);
             border-radius: 32px;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 1000px;
+            border: 1px solid rgba(230, 57, 70, 0.35);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        .glass-panel:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 55px -15px rgba(230, 57, 70, 0.25);
+            border-color: rgba(230, 57, 70, 0.7);
         }
 
-        h1, h2, p {
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        /* 3D layered stripe element (static but with depth) */
+        .stripe-3d {
+            position: absolute;
+            background: linear-gradient(135deg, var(--red), var(--burgundy));
+            opacity: 0.25;
+            filter: blur(35px);
+            transform-style: preserve-3d;
+            border-radius: 50%;
+            z-index: -1;
         }
 
+        /* -------------------------------------------------------------
+            TYPOGRAPHY & UTILITIES
+        ------------------------------------------------------------- */
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
         h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, #e63946);
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.05;
+            background: linear-gradient(135deg, var(--white), #d4d4dc);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         h2 {
-            font-size: 2rem;
-            border-left: 4px solid #e63946;
-            padding-left: 1rem;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--red), var(--burgundy));
+            border-radius: 4px;
+        }
+        .accent-text {
+            color: var(--red);
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        /* -------------------------------------------------------------
+            HERO SECTION with 3D glass stripe overlay
+        ------------------------------------------------------------- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+        .hero-sub {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 1.5rem 0 2rem;
         }
         .btn-primary {
             display: inline-block;
-            background: #e63946;
+            background: linear-gradient(105deg, var(--red), var(--burgundy));
             color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
-            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 60px;
             font-weight: 600;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(230,57,70,0.4);
+            text-decoration: none;
+            transition: all 0.3s ease;
             border: none;
             cursor: pointer;
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+            letter-spacing: 0.5px;
         }
         .btn-primary:hover {
-            background: #ff4d5e;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(230,57,70,0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(230, 57, 70, 0.6);
+            background: linear-gradient(105deg, #ff4d5e, #8a2438);
         }
+
+        /* -------------------------------------------------------------
+            SPECS GRID (glass cards)
+        ------------------------------------------------------------- */
         .specs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
             margin-top: 2rem;
         }
         .spec-card {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
-            border-radius: 24px;
-            padding: 1.5rem;
-            border: 1px solid rgba(230,57,70,0.4);
-            transition: 0.3s;
+            background: rgba(20, 20, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 2rem;
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            transition: var(--transition-smooth);
         }
         .spec-card:hover {
-            border-color: #e63946;
-            transform: translateY(-5px);
-            background: rgba(0,0,0,0.7);
+            border-color: var(--red);
+            background: rgba(30, 30, 45, 0.7);
+            transform: translateY(-8px);
         }
         .spec-card h3 {
-            color: #e63946;
-            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--red);
         }
-        .contact {
+        .spec-card p {
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        /* -------------------------------------------------------------
+            GALLERY – professional masonry with glass overlay
+        ------------------------------------------------------------- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .gallery-item {
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+            background: #111114;
+            transition: all 0.4s ease;
+            box-shadow: 0 15px 30px -15px rgba(0, 0, 0, 0.5);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.03);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 0.8rem;
             text-align: center;
+            font-weight: 500;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            border-top: 1px solid rgba(230, 57, 70, 0.5);
         }
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* -------------------------------------------------------------
+            STORY / ABOUT
+        ------------------------------------------------------------- */
+        .story-text {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #e0e0e0;
+        }
+        .story-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* -------------------------------------------------------------
+            CONTACT
+        ------------------------------------------------------------- */
+        .contact-card {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem;
+        }
+        .contact-card .btn-primary {
+            margin-top: 1.5rem;
+        }
+
+        /* -------------------------------------------------------------
+            FOOTER
+        ------------------------------------------------------------- */
         footer {
             text-align: center;
             padding: 2rem;
-            font-size: 0.8rem;
+            border-top: 1px solid rgba(230, 57, 70, 0.3);
+            font-size: 0.85rem;
             color: #aaa;
         }
-        a {
-            color: #e63946;
-            text-decoration: none;
-        }
+
+        /* -------------------------------------------------------------
+            RESPONSIVE
+        ------------------------------------------------------------- */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .glass-panel { margin: 1rem; padding: 1rem; }
+            .container {
+                padding: 0 1rem;
+            }
+            section {
+                padding: 3rem 0;
+            }
+            .spec-card h3 {
+                font-size: 1.3rem;
+            }
+            .story-text {
+                font-size: 1rem;
+            }
+        }
+
+        /* scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
 
-<div class="content">
-    <section style="min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;">
-        <div class="glass-panel" style="max-width: 800px;">
-            <h1>The Magnetic Coin<br>Action Camera</h1>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">1TB internal storage · Edge‑to‑edge OLED · Inspired by Jony Ive & Apple</p>
-            <a href="#gallery" class="btn-primary">Explore the 3D Gallery ↓</a>
-        </div>
-    </section>
+    <!-- 3D Canvas Background: floating glass stripes (professional, abstract) -->
+    <canvas id="bg-canvas"></canvas>
 
-    <section id="gallery" style="padding: 4rem 1rem;">
-        <div class="glass-panel">
-            <h2>Design Gallery</h2>
-            <p style="margin-bottom: 2rem;">Below you'll find a 3D interactive view of your renders. Drag to rotate, scroll to zoom.</p>
-            <div style="height: 600px; width: 100%; position: relative; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-                <!-- 3D canvas will be injected here -->
-                <canvas id="three-canvas" style="width: 100%; height: 100%; display: block;"></canvas>
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content reveal">
+                <h1>The <span class="accent-text">Magnetic Coin</span><br>Action Camera</h1>
+                <div class="hero-sub">1TB internal storage · Edge‑to‑edge OLED · Inspired by Jony Ive & Apple</div>
+                <a href="#gallery" class="btn-primary">Explore the design →</a>
             </div>
-            <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem;">✨ Hover over images to see them glow — they float in a liquid‑glass bubble field ✨</p>
-        </div>
-    </section>
+            <!-- floating glass stripe decorations (3D layered) -->
+            <div class="stripe-3d" style="width: 300px; height: 300px; top: 10%; left: -100px; background: radial-gradient(circle, var(--red), var(--burgundy)); opacity: 0.15; filter: blur(50px);"></div>
+            <div class="stripe-3d" style="width: 500px; height: 500px; bottom: -200px; right: -150px; background: radial-gradient(circle, var(--burgundy), var(--black)); opacity: 0.2; filter: blur(70px);"></div>
+        </section>
 
-    <section style="padding: 2rem 1rem;">
-        <div class="glass-panel">
-            <h2>Technical Highlights</h2>
-            <div class="specs-grid">
-                <div class="spec-card"><h3>Magnetic Coin System</h3><p>Swap the red fabric strap for a magnetic charger in seconds. The coin sits flush, ejected by a recessed button.</p></div>
-                <div class="spec-card"><h3>1TB Internal Storage</h3><p>No more lost SD cards. Built‑in storage keeps your footage safe and simplifies your workflow.</p></div>
-                <div class="spec-card"><h3>Edge‑to‑Edge OLED</h3><p>Front and back displays disappear into the anodised aluminium body – bright, sharp, and intuitive.</p></div>
-                <div class="spec-card"><h3>Tactile Controls</h3><p>iMac M4‑inspired power button, pill‑shaped volume keys (front up / back down), and a dedicated capture button.</p></div>
-                <div class="spec-card"><h3>Premium Materials</h3><p>Matte silver anodised aluminium with deep red accents. Compact dimensions: 65 × 48.75 × 23.83 mm.</p></div>
-                <div class="spec-card"><h3>Action‑Ready</h3><p>Designed for adventure – rugged yet refined. Water‑resistant concept with a sapphire glass lens cover.</p></div>
+        <!-- Specs Section -->
+        <section id="specs">
+            <div class="container">
+                <h2>Technical Highlights</h2>
+                <div class="specs-grid">
+                    <div class="spec-card reveal"><h3>Magnetic Coin System</h3><p>Swap the red fabric strap for a magnetic charger in seconds. The coin sits flush, ejected by a recessed button.</p></div>
+                    <div class="spec-card reveal"><h3>1TB Internal Storage</h3><p>No more lost SD cards. Built‑in storage keeps your footage safe and simplifies your workflow.</p></div>
+                    <div class="spec-card reveal"><h3>Edge‑to‑Edge OLED</h3><p>Front and back displays disappear into the anodised aluminium body – bright, sharp, and intuitive.</p></div>
+                    <div class="spec-card reveal"><h3>Tactile Controls</h3><p>iMac M4‑inspired power button, pill‑shaped volume keys (front up / back down), and a dedicated capture button.</p></div>
+                    <div class="spec-card reveal"><h3>Premium Materials</h3><p>Matte silver anodised aluminium with deep red accents. Compact dimensions: 65 × 48.75 × 23.83 mm.</p></div>
+                    <div class="spec-card reveal"><h3>Action‑Ready</h3><p>Designed for adventure – rugged yet refined. Water‑resistant concept with a sapphire glass lens cover.</p></div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section style="padding: 2rem 1rem;">
-        <div class="glass-panel">
-            <h2>From Idea to Reality</h2>
-            <div style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.6;">
-                <p>I started with zero engineering knowledge, a 3D printer, and a stubborn curiosity. I taught myself Fusion 360 by crashing it more times than I can count. Every fillet, every button, every decision came from asking <em>“what if?”</em></p>
-                <p>What if the strap was bright red fabric against cold silver metal? What if the buttons felt as good as they looked? What if the camera had 1TB internal storage so you never lose an SD card?</p>
-                <p>Inspired by Jony Ive’s Ferrari Luce interior, the iPhone 17 Pro’s anodised finish, and the iMac M4’s perfect power button, I built a camera that feels as good in your hand as it looks on paper.</p>
-                <p>Now it exists as a complete 3D model, technical drawings, and 3D‑printed prototypes (PLA‑CF and red PLA). This is version one – and it's only the beginning.</p>
+        <!-- Gallery Section (professional, clean) -->
+        <section id="gallery">
+            <div class="container">
+                <h2>Design Gallery</h2>
+                <div class="gallery-grid">
+                    <!-- hero shots -->
+                    <div class="gallery-item reveal"><img src="Hero shot 1.png" alt="Hero shot 1"><div class="gallery-caption">Hero shot 1</div></div>
+                    <div class="gallery-item reveal"><img src="Hero shot 2.png" alt="Hero shot 2"><div class="gallery-caption">Hero shot 2</div></div>
+                    <div class="gallery-item reveal"><img src="Hero shot 3.png" alt="Hero shot 3"><div class="gallery-caption">Hero shot 3</div></div>
+                    <div class="gallery-item reveal"><img src="Hero shot 4.png" alt="Hero shot 4"><div class="gallery-caption">Hero shot 4</div></div>
+                    <!-- detail shots -->
+                    <div class="gallery-item reveal"><img src="Detail shot 1.png" alt="Detail shot 1"><div class="gallery-caption">Detail shot 1</div></div>
+                    <div class="gallery-item reveal"><img src="Detail shot 2.png" alt="Detail shot 2"><div class="gallery-caption">Detail shot 2</div></div>
+                    <div class="gallery-item reveal"><img src="Detail shot 3.png" alt="Detail shot 3"><div class="gallery-caption">Detail shot 3</div></div>
+                    <!-- previous iterations -->
+                    <div class="gallery-item reveal"><img src="Previous iteration shot 1.png" alt="Previous iteration shot 1"><div class="gallery-caption">Previous iteration shot 1</div></div>
+                    <div class="gallery-item reveal"><img src="Previous iteration shot 2.png" alt="Previous iteration shot 2"><div class="gallery-caption">Previous iteration shot 2</div></div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section style="padding: 2rem 1rem;">
-        <div class="glass-panel contact">
-            <h2>Let’s Build Something</h2>
-            <p style="margin-bottom: 1.5rem;">Interested in collaborating, manufacturing, or just want to chat about the design? Reach out.</p>
-            <a href="mailto:Ishi87593@gmail.com" class="btn-primary">Contact Me</a>
-        </div>
-    </section>
+        <!-- Story Section -->
+        <section id="story">
+            <div class="container">
+                <h2>From Idea to Reality</h2>
+                <div class="story-text reveal">
+                    <p>I started with zero engineering knowledge, a 3D printer, and a stubborn curiosity. I taught myself Fusion 360 by crashing it more times than I can count. Every fillet, every button, every decision came from asking <em>“what if?”</em></p>
+                    <p>What if the strap was bright red fabric against cold silver metal? What if the buttons felt as good as they looked? What if the camera had 1TB internal storage so you never lose an SD card?</p>
+                    <p>Inspired by Jony Ive’s Ferrari Luce interior, the iPhone 17 Pro’s anodised finish, and the iMac M4’s perfect power button, I built a camera that feels as good in your hand as it looks on paper.</p>
+                    <p>Now it exists as a complete 3D model, technical drawings, and 3D‑printed prototypes (PLA‑CF and red PLA). This is version one – and it's only the beginning.</p>
+                </div>
+            </div>
+        </section>
 
-    <footer>
-        <p>© 2026 Ishan Kumar – Designed in Fusion 360, brought to life with a Bambu Lab P2S.</p>
-        <p>This is an independent project – all concepts and designs are original.</p>
-    </footer>
-</div>
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <div class="glass-panel contact-card reveal">
+                    <h2>Let’s Build Something</h2>
+                    <p style="margin-bottom: 1rem;">Interested in collaborating, manufacturing, or just want to chat about the design? Reach out.</p>
+                    <a href="mailto:Ishi87593@gmail.com" class="btn-primary">Contact Me</a>
+                </div>
+            </div>
+        </section>
 
-<!-- Import Three.js core and add-ons -->
-<script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+        <footer>
+            <p>© 2026 Ishan Kumar – Designed in Fusion 360, brought to life with a Bambu Lab P2S.</p>
+            <p style="margin-top: 0.5rem;">This is an independent project – all concepts and designs are original.</p>
+        </footer>
+    </div>
+
+    <!-- Three.js Background (abstract 3D glass planes, stripes, professional) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+            }
         }
-    }
-</script>
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
 
-<script type="module">
-    import * as THREE from 'three';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-    
-    // --- Setup scene, camera, renderer ---
-    const canvas = document.getElementById('three-canvas');
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x050510);
-    scene.fog = new THREE.FogExp2(0x050510, 0.008);
-
-    const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    camera.position.set(5, 3, 8);
-    camera.lookAt(0, 0, 0);
-
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true });
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.toneMapping = THREE.ReinhardToneMapping;
-    renderer.toneMappingExposure = 1.2;
-
-    // --- Controls for interactivity ---
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.0;
-    controls.enableZoom = true;
-    controls.enablePan = false;
-    controls.target.set(0, 0.5, 0);
-
-    // --- Bloom effect for that "liquid glass" glow ---
-    const renderScene = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(canvas.clientWidth, canvas.clientHeight), 1.2, 0.3, 0.85);
-    bloomPass.threshold = 0.1;
-    bloomPass.strength = 0.8;
-    bloomPass.radius = 0.5;
-    const effectComposer = new EffectComposer(renderer);
-    effectComposer.addPass(renderScene);
-    effectComposer.addPass(bloomPass);
-
-    // --- Lights ---
-    const ambientLight = new THREE.AmbientLight(0x404060);
-    scene.add(ambientLight);
-    const mainLight = new THREE.DirectionalLight(0xffffff, 1);
-    mainLight.position.set(2, 5, 3);
-    scene.add(mainLight);
-    const fillLight = new THREE.PointLight(0x4466cc, 0.5);
-    fillLight.position.set(-2, 1, 4);
-    scene.add(fillLight);
-    const backLight = new THREE.PointLight(0xffaa66, 0.4);
-    backLight.position.set(0, 2, -5);
-    scene.add(backLight);
-    const rimLight = new THREE.PointLight(0xe63946, 0.6);
-    rimLight.position.set(1, 1.5, -2);
-    scene.add(rimLight);
-
-    // --- Liquid glass background: floating bubbles (refractive spheres) ---
-    const bubbleGeometry = new THREE.SphereGeometry(0.25, 32, 32);
-    const bubbleMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0x88aaff,
-        emissive: 0x112233,
-        metalness: 0.9,
-        roughness: 0.2,
-        clearcoat: 1,
-        clearcoatRoughness: 0.1,
-        reflectivity: 0.5,
-        transparent: true,
-        opacity: 0.35
-    });
-    const bubbles = [];
-    for (let i = 0; i < 180; i++) {
-        const bubble = new THREE.Mesh(bubbleGeometry, bubbleMaterial.clone());
-        bubble.scale.setScalar(0.6 + Math.random() * 1.2);
-        bubble.position.x = (Math.random() - 0.5) * 25;
-        bubble.position.y = (Math.random() - 0.5) * 12 + 1;
-        bubble.position.z = (Math.random() - 0.5) * 20 - 10;
-        bubble.userData = { speed: 0.002 + Math.random() * 0.003, floatRange: Math.random() * 1.5 };
-        scene.add(bubble);
-        bubbles.push(bubble);
-    }
-
-    // --- Also add some larger floating glass orbs with refraction (using a custom shader would be heavy, but we'll use glass material) ---
-    const bigGlassMat = new THREE.MeshPhysicalMaterial({
-        color: 0x88aaff,
-        metalness: 0.95,
-        roughness: 0.15,
-        clearcoat: 1,
-        transparent: true,
-        opacity: 0.25,
-        envMapIntensity: 1.2
-    });
-    for (let i = 0; i < 40; i++) {
-        const orb = new THREE.Mesh(new THREE.SphereGeometry(0.4, 48, 48), bigGlassMat);
-        orb.scale.setScalar(0.8 + Math.random() * 1.2);
-        orb.position.x = (Math.random() - 0.5) * 18;
-        orb.position.y = (Math.random() - 0.5) * 10 + 1;
-        orb.position.z = (Math.random() - 0.5) * 20 - 12;
-        orb.userData = { speed: 0.001 + Math.random() * 0.002, floatRange: Math.random() * 1.2 };
-        scene.add(orb);
-        bubbles.push(orb);
-    }
-
-    // --- Add a subtle central glow effect: a ring of particles ---
-    const particleCount = 800;
-    const particleGeometry = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-        const radius = 2.5 + Math.random() * 1.5;
-        const angle = Math.random() * Math.PI * 2;
-        const y = (Math.random() - 0.5) * 3;
-        particlePositions[i*3] = Math.cos(angle) * radius;
-        particlePositions[i*3+1] = y;
-        particlePositions[i*3+2] = Math.sin(angle) * radius;
-    }
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    const particleMat = new THREE.PointsMaterial({ color: 0xe63946, size: 0.05, transparent: true, opacity: 0.6 });
-    const particleRing = new THREE.Points(particleGeometry, particleMat);
-    scene.add(particleRing);
-
-    // --- Image Gallery 3D Cards ---
-    // Define all image names (matching your uploaded PNGs)
-    const imageNames = [
-        "Hero shot 1.png", "Hero shot 2.png", "Hero shot 3.png", "Hero shot 4.png",
-        "Detail shot 1.png", "Detail shot 2.png", "Detail shot 3.png",
-        "Previous iteration shot 1.png", "Previous iteration shot 2.png"
-    ];
-    const cards = [];
-    const radiusCircle = 3.8;
-    const startAngle = -Math.PI / 3;
-
-    imageNames.forEach((name, idx) => {
-        const angle = startAngle + (idx / imageNames.length) * Math.PI * 2;
-        const x = Math.cos(angle) * radiusCircle;
-        const z = Math.sin(angle) * radiusCircle;
-        const y = Math.sin(angle * 2) * 0.8; // slight vertical variation
-
-        // Create a plane to display the image
-        const texture = new THREE.TextureLoader().load(name, undefined, undefined, (err) => console.warn(`Could not load ${name}`, err));
-        texture.colorSpace = THREE.SRGBColorSpace;
-        const material = new THREE.MeshStandardMaterial({
-            map: texture,
-            side: THREE.DoubleSide,
-            emissive: 0x331111,
-            emissiveIntensity: 0.2,
-            metalness: 0.3,
-            roughness: 0.4,
-            transparent: true
+        // Setup scene, camera, renderer
+        const canvas = document.getElementById('bg-canvas');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x05050a);
+        
+        // Camera (orthographic for consistent stripes, but perspective gives depth)
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 12);
+        camera.lookAt(0, 0, 0);
+        
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // --- Create abstract glass stripe planes with transparency and blur-like effect via bloom? But we'll just use transparent materials.
+        // We'll generate several long, thin, rotated rectangles with glass material, moving slowly.
+        const stripeGroup = [];
+        const colors = [0xe63946, 0x6b1e2a, 0xffffff, 0xaa2e3e];
+        
+        for (let i = 0; i < 60; i++) {
+            const width = 2.5 + Math.random() * 4;
+            const height = 0.2 + Math.random() * 0.6;
+            const geometry = new THREE.BoxGeometry(width, height, 0.05);
+            const material = new THREE.MeshStandardMaterial({
+                color: colors[Math.floor(Math.random() * colors.length)],
+                emissive: i % 3 === 0 ? 0x330000 : 0x000000,
+                emissiveIntensity: 0.1 + Math.random() * 0.2,
+                metalness: 0.85,
+                roughness: 0.25,
+                transparent: true,
+                opacity: 0.35 + Math.random() * 0.3,
+                side: THREE.DoubleSide
+            });
+            const stripe = new THREE.Mesh(geometry, material);
+            // Random positions in a cylinder shape around the center
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 4 + Math.random() * 3;
+            stripe.position.x = Math.cos(angle) * radius;
+            stripe.position.y = (Math.random() - 0.5) * 5;
+            stripe.position.z = Math.sin(angle) * radius - 3;
+            stripe.rotation.z = Math.random() * Math.PI;
+            stripe.rotation.x = Math.random() * Math.PI;
+            stripe.rotation.y = Math.random() * Math.PI;
+            stripe.userData = {
+                speedRot: 0.002 + Math.random() * 0.005,
+                speedMove: 0.001 + Math.random() * 0.002,
+                axis: Math.random() > 0.5 ? 'y' : 'z',
+                originalPos: stripe.position.clone()
+            };
+            scene.add(stripe);
+            stripeGroup.push(stripe);
+        }
+        
+        // Add floating glass particles (tiny spheres for subtle sparkle)
+        const particleCount = 800;
+        const particleGeometry = new THREE.BufferGeometry();
+        const particlePositions = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount; i++) {
+            particlePositions[i*3] = (Math.random() - 0.5) * 20;
+            particlePositions[i*3+1] = (Math.random() - 0.5) * 12;
+            particlePositions[i*3+2] = (Math.random() - 0.5) * 15 - 5;
+        }
+        particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xe63946,
+            size: 0.05,
+            transparent: true,
+            opacity: 0.4,
+            blending: THREE.AdditiveBlending
         });
-        const planeGeometry = new THREE.PlaneGeometry(1.6, 1.6);
-        const card = new THREE.Mesh(planeGeometry, material);
-        card.position.set(x, y, z);
-        // Make cards face the center (or slightly outward)
-        card.lookAt(0, y, 0);
-        scene.add(card);
+        const particles = new THREE.Points(particleGeometry, particleMat);
+        scene.add(particles);
         
-        // Add a glowing border using a slightly larger plane with emissive material
-        const borderMat = new THREE.MeshBasicMaterial({ color: 0xe63946, transparent: true, opacity: 0.3, side: THREE.BackSide });
-        const borderPlane = new THREE.Mesh(planeGeometry, borderMat);
-        borderPlane.scale.setScalar(1.05);
-        card.add(borderPlane);
+        // Lights (to enhance glass reflections)
+        const ambientLight = new THREE.AmbientLight(0x222222);
+        scene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+        dirLight.position.set(2, 3, 4);
+        scene.add(dirLight);
+        const backLight = new THREE.PointLight(0x882222, 0.6);
+        backLight.position.set(-2, 1, -4);
+        scene.add(backLight);
+        const fillLight = new THREE.PointLight(0x4466aa, 0.4);
+        fillLight.position.set(3, 1, 2);
+        scene.add(fillLight);
         
-        cards.push(card);
-    });
+        // Simple gradient background? not needed, canvas covers.
+        
+        // Animation loop
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.016;
+            
+            // Rotate and drift stripes for dynamic 3D glass effect
+            stripeGroup.forEach(stripe => {
+                stripe.rotation.x += stripe.userData.speedRot * 0.8;
+                stripe.rotation.z += stripe.userData.speedRot * 0.6;
+                stripe.position.y += Math.sin(time * stripe.userData.speedMove * 3) * 0.002;
+                stripe.position.x += Math.cos(time * 0.5) * 0.0005;
+                // slight color pulse
+                if (stripe.material) {
+                    const intensity = 0.15 + Math.sin(time * 0.8) * 0.05;
+                    stripe.material.emissiveIntensity = intensity;
+                }
+            });
+            
+            // Rotate particle cloud slowly
+            particles.rotation.y += 0.001;
+            particles.rotation.x += 0.0005;
+            
+            // subtle camera movement
+            camera.position.x = Math.sin(time * 0.1) * 0.2;
+            camera.position.y = Math.cos(time * 0.15) * 0.1;
+            camera.lookAt(0, 0, 0);
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Resize handler
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        onWindowResize();
+    </script>
 
-    // Add a subtle floating reflective floor (transparent disc)
-    const floorDiscMat = new THREE.MeshStandardMaterial({
-        color: 0x112233,
-        metalness: 0.8,
-        roughness: 0.3,
-        transparent: true,
-        opacity: 0.25,
-        side: THREE.DoubleSide
-    });
-    const floorDisc = new THREE.Mesh(new THREE.CircleGeometry(4.5, 32), floorDiscMat);
-    floorDisc.rotation.x = -Math.PI / 2;
-    floorDisc.position.y = -1.2;
-    scene.add(floorDisc);
-
-    // --- Animation Loop: float bubbles and auto-rotate controls gently ---
-    let time = 0;
-    function animate() {
-        requestAnimationFrame(animate);
-        time += 0.016; // approximate
-
-        // Float bubbles
-        bubbles.forEach(bubble => {
-            bubble.position.y += Math.sin(time * bubble.userData.speed * 2) * 0.002;
-            bubble.rotation.x += 0.005;
-            bubble.rotation.z += 0.007;
+    <!-- Scroll reveal script (lightweight) -->
+    <script>
+        // Intersection Observer for reveal animations
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.2 });
+        reveals.forEach(el => observer.observe(el));
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
         });
-        
-        // Rotate particle ring slowly
-        particleRing.rotation.y += 0.003;
-        particleRing.rotation.x = Math.sin(time * 0.2) * 0.1;
-        
-        // Slight idle rotation for camera if auto-rotate is enabled (OrbitControls supports autoRotate)
-        controls.update();
-        
-        // Update bloom pass size if canvas resized
-        effectComposer.render();
-    }
-    
-    animate();
-
-    // --- Handle window resize ---
-    window.addEventListener('resize', onWindowResize, false);
-    function onWindowResize() {
-        const width = canvas.clientWidth;
-        const height = canvas.clientHeight;
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-        effectComposer.setSize(width, height);
-    }
-    onWindowResize();
-    
-    // Optional: add a little pulse to the rim light
-    let lightTime = 0;
-    setInterval(() => {
-        lightTime += 0.05;
-        const intensity = 0.5 + Math.sin(lightTime) * 0.2;
-        rimLight.intensity = intensity;
-    }, 100);
-</script>
+    </script>
 </body>
 </html>
