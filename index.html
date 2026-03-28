@@ -5,208 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Ishan Kumar | Action Camera Project</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #0a0a0a;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #eaeef2;
-            line-height: 1.5;
-            scroll-behavior: smooth;
-        }
-
-        /* custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #e63946;
-            border-radius: 4px;
-        }
-
-        /* typography */
-        h1, h2, h3 {
-            font-weight: 500;
-            letter-spacing: -0.02em;
-        }
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            line-height: 1.1;
-        }
-        h2 {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            border-left: 4px solid #e63946;
-            padding-left: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        a {
-            color: #e63946;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-        a:hover {
-            color: #ff6b7c;
-        }
-
-        /* layout */
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* hero section */
-        .hero {
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: radial-gradient(circle at 70% 20%, #1e1e2a, #0a0a0a);
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBmaWxsPSIjMjIyIiBmaWxsLW9wYWNpdHk9IjAuMDMiIGQ9Ik0wIDBoNDB2NDBIMHoiLz48cGF0aCBkPSJNMjAgMzhjLTkuOSAwLTE4LTguMS0xOC0xOHM4LjEtMTggMTgtMTggMTggOC4xIDE4IDE4LTguMSAxOC0xOCAxOHoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3N2Zz4=');
-            opacity: 0.1;
-            pointer-events: none;
-        }
-        .hero-content {
-            max-width: 800px;
-            z-index: 2;
-            animation: fadeUp 0.8s ease-out;
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .hero h1 span {
-            color: #e63946;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            margin: 1.5rem 0;
-            opacity: 0.8;
-        }
-        .btn {
-            display: inline-block;
-            background: #e63946;
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
-            font-weight: 500;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(230,57,70,0.3);
-        }
-        .btn:hover {
-            background: #ff4d5e;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(230,57,70,0.4);
-        }
-
-        /* sections */
-        section {
-            padding: 5rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .section-light {
-            background: #111114;
-        }
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .spec-card {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(4px);
-            border-radius: 28px;
-            padding: 1.8rem;
-            border: 1px solid rgba(230,57,70,0.2);
-            transition: all 0.3s;
-        }
-        .spec-card:hover {
-            border-color: #e63946;
-            transform: translateY(-5px);
-        }
-        .spec-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #e63946;
-        }
-        .spec-card p {
-            font-size: 1rem;
-            opacity: 0.8;
-        }
-
-        /* gallery */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        .gallery-item {
-            background: #1c1c24;
-            border-radius: 24px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-        .gallery-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-        .gallery-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: 0.3s;
-        }
-        .gallery-caption {
-            padding: 1rem;
-            font-size: 0.9rem;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            background: #111114;
-        }
-
-        /* story section */
-        .story {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .story p {
-            font-size: 1.1rem;
-            margin-bottom: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* footer */
-        footer {
-            background: #050505;
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-
-        /* utilities */
+        /* (same CSS as before – no changes) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #0a0a0a; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #eaeef2; line-height: 1.5; scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #e63946; border-radius: 4px; }
+        h1, h2, h3 { font-weight: 500; letter-spacing: -0.02em; }
+        h1 { font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; }
+        h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); border-left: 4px solid #e63946; padding-left: 1rem; margin-bottom: 1.5rem; }
+        a { color: #e63946; text-decoration: none; transition: 0.2s; }
+        a:hover { color: #ff6b7c; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle at 70% 20%, #1e1e2a, #0a0a0a); position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBmaWxsPSIjMjIyIiBmaWxsLW9wYWNpdHk9IjAuMDMiIGQ9Ik0wIDBoNDB2NDBIMHoiLz48cGF0aCBkPSJNMjAgMzhjLTkuOSAwLTE4LTguMS0xOC0xOHM4LjEtMTggMTgtMTggMTggOC4xIDE4IDE4LTguMSAxOC0xOCAxOHoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3N2Zz4='); opacity: 0.1; pointer-events: none; }
+        .hero-content { max-width: 800px; z-index: 2; animation: fadeUp 0.8s ease-out; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .hero h1 span { color: #e63946; }
+        .hero p { font-size: 1.2rem; margin: 1.5rem 0; opacity: 0.8; }
+        .btn { display: inline-block; background: #e63946; color: white; padding: 0.8rem 2rem; border-radius: 40px; font-weight: 500; transition: 0.3s; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(230,57,70,0.3); }
+        .btn:hover { background: #ff4d5e; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(230,57,70,0.4); }
+        section { padding: 5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .section-light { background: #111114; }
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .spec-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(4px); border-radius: 28px; padding: 1.8rem; border: 1px solid rgba(230,57,70,0.2); transition: all 0.3s; }
+        .spec-card:hover { border-color: #e63946; transform: translateY(-5px); }
+        .spec-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #e63946; }
+        .spec-card p { font-size: 1rem; opacity: 0.8; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .gallery-item { background: #1c1c24; border-radius: 24px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .gallery-item:hover { transform: scale(1.02); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .gallery-item img { width: 100%; height: auto; display: block; transition: 0.3s; }
+        .gallery-caption { padding: 1rem; font-size: 0.9rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: #111114; }
+        .story { max-width: 900px; margin: 0 auto; text-align: center; }
+        .story p { font-size: 1.1rem; margin-bottom: 1.2rem; opacity: 0.9; }
+        footer { background: #050505; text-align: center; padding: 2rem; font-size: 0.9rem; color: #aaa; }
         .text-center { text-align: center; }
         .mt-4 { margin-top: 2rem; }
         .accent { color: #e63946; }
@@ -215,7 +48,6 @@
 <body>
 
 <main>
-    <!-- Hero section -->
     <div class="hero">
         <div class="hero-content">
             <h1>The <span>Magnetic Coin</span> Action Camera</h1>
@@ -229,58 +61,39 @@
         <section id="specs">
             <h2>Technical Highlights</h2>
             <div class="specs-grid">
-                <div class="spec-card">
-                    <h3>Magnetic Coin System</h3>
-                    <p>Swap the red fabric strap for a magnetic charger in seconds. The coin sits flush, ejected by a recessed button.</p>
-                </div>
-                <div class="spec-card">
-                    <h3>1TB Internal Storage</h3>
-                    <p>No more lost SD cards. Built‑in storage keeps your footage safe and simplifies your workflow.</p>
-                </div>
-                <div class="spec-card">
-                    <h3>Edge‑to‑Edge OLED</h3>
-                    <p>Front and back displays disappear into the anodised aluminium body – bright, sharp, and intuitive.</p>
-                </div>
-                <div class="spec-card">
-                    <h3>Tactile Controls</h3>
-                    <p>iMac M4‑inspired power button, pill‑shaped volume keys (front up / back down), and a dedicated capture button.</p>
-                </div>
-                <div class="spec-card">
-                    <h3>Premium Materials</h3>
-                    <p>Matte silver anodised aluminium with deep red accents. Compact dimensions: 65 × 48.75 × 23.83 mm.</p>
-                </div>
-                <div class="spec-card">
-                    <h3>Action‑Ready</h3>
-                    <p>Designed for adventure – rugged yet refined. Water‑resistant concept with a sapphire glass lens cover.</p>
-                </div>
+                <div class="spec-card"><h3>Magnetic Coin System</h3><p>Swap the red fabric strap for a magnetic charger in seconds. The coin sits flush, ejected by a recessed button.</p></div>
+                <div class="spec-card"><h3>1TB Internal Storage</h3><p>No more lost SD cards. Built‑in storage keeps your footage safe and simplifies your workflow.</p></div>
+                <div class="spec-card"><h3>Edge‑to‑Edge OLED</h3><p>Front and back displays disappear into the anodised aluminium body – bright, sharp, and intuitive.</p></div>
+                <div class="spec-card"><h3>Tactile Controls</h3><p>iMac M4‑inspired power button, pill‑shaped volume keys (front up / back down), and a dedicated capture button.</p></div>
+                <div class="spec-card"><h3>Premium Materials</h3><p>Matte silver anodised aluminium with deep red accents. Compact dimensions: 65 × 48.75 × 23.83 mm.</p></div>
+                <div class="spec-card"><h3>Action‑Ready</h3><p>Designed for adventure – rugged yet refined. Water‑resistant concept with a sapphire glass lens cover.</p></div>
             </div>
         </section>
 
-        <!-- Gallery (placeholders) -->
+        <!-- Gallery – now using your render file names -->
         <section id="gallery">
             <h2>Design Gallery</h2>
             <div class="gallery">
-                <div class="gallery-item">
-                    <img src="render_front.jpg" alt="Front render" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Front+Render'">
-                    <div class="gallery-caption">Front view – sleek anodised finish</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="render_back.jpg" alt="Back render" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Back+Render'">
-                    <div class="gallery-caption">Back with edge‑to‑edge display</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="coin_mechanism.jpg" alt="Coin mechanism" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Coin+Mechanism'">
-                    <div class="gallery-caption">Magnetic coin with red fabric strap</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="prototype_red.jpg" alt="Red prototype" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Red+PLA+Prototype'">
-                    <div class="gallery-caption">3D printed prototype (red PLA)</div>
-                </div>
+                <!-- Hero shots (full camera views) -->
+                <div class="gallery-item"><img src="Hero shot 1.jpg" alt="Hero shot 1" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Hero+Shot+1'"><div class="gallery-caption">Hero shot – front perspective</div></div>
+                <div class="gallery-item"><img src="Hero shot 2.jpg" alt="Hero shot 2" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Hero+Shot+2'"><div class="gallery-caption">Hero shot – side view</div></div>
+                <div class="gallery-item"><img src="Hero shot 3.jpg" alt="Hero shot 3" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Hero+Shot+3'"><div class="gallery-caption">Hero shot – rear with display</div></div>
+                <div class="gallery-item"><img src="Hero shot 4.jpg" alt="Hero shot 4" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Hero+Shot+4'"><div class="gallery-caption">Hero shot – angled view</div></div>
+                <!-- Detail shots -->
+                <div class="gallery-item"><img src="Detail shot 1.jpg" alt="Detail shot 1" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Detail+Shot+1'"><div class="gallery-caption">Detail – coin mechanism</div></div>
+                <div class="gallery-item"><img src="Detail shot 2.jpg" alt="Detail shot 2" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Detail+Shot+2'"><div class="gallery-caption">Detail – power button</div></div>
+                <div class="gallery-item"><img src="Detail shot 3.jpg" alt="Detail shot 3" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Detail+Shot+3'"><div class="gallery-caption">Detail – volume controls</div></div>
+                <!-- Mood / artistic -->
+                <div class="gallery-item"><img src="Mood-artistic shot 1.jpg" alt="Mood/artistic shot 1" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Mood+Shot+1'"><div class="gallery-caption">Artistic – light play</div></div>
+                <div class="gallery-item"><img src="Mood-artistic shot 2.jpg" alt="Mood/artistic shot 2" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Mood+Shot+2'"><div class="gallery-caption">Artistic – fabric strap detail</div></div>
+                <!-- Previous iterations -->
+                <div class="gallery-item"><img src="Previous iteration shot 1.jpg" alt="Previous iteration shot 1" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Iteration+1'"><div class="gallery-caption">Previous iteration – early prototype</div></div>
+                <div class="gallery-item"><img src="Previous iteration shot 2.jpg" alt="Previous iteration shot 2" onerror="this.src='https://placehold.co/600x400/1a1a2e/ffffff?text=Iteration+2'"><div class="gallery-caption">Previous iteration – scale exploration</div></div>
             </div>
-            <p class="text-center" style="font-size:0.9rem; margin-top:1rem;">*Replace the placeholder images with your own renders and photos. Keep the filenames as shown or edit the <code>src</code> attributes.</p>
+            <p class="text-center" style="font-size:0.9rem; margin-top:1rem;">*Upload your images with these exact file names (including spaces). The site will show them once uploaded.</p>
         </section>
 
-        <!-- Story & Process -->
+        <!-- Story & Process (unchanged) -->
         <section class="section-light">
             <div class="story">
                 <h2>From Idea to Reality</h2>
@@ -291,7 +104,7 @@
             </div>
         </section>
 
-        <!-- Contact / Call to action -->
+        <!-- Contact -->
         <section style="text-align: center;">
             <h2>Let’s Build Something</h2>
             <p style="max-width: 600px; margin: 0 auto 1.5rem;">If you're interested in collaborating, manufacturing, or just want to chat about the design, reach out.</p>
@@ -306,7 +119,6 @@
 </main>
 
 <script>
-    // Optional: smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const target = document.querySelector(this.getAttribute('href'));
